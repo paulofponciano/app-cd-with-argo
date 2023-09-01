@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+
+namespace: webgo
+images:
+- name: webgo
+  newName: paulofponciano/webgo
+  newTag: 52d4bba00ab4b6a46955ee5d9e0a647550c73c3d

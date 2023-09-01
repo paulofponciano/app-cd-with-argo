@@ -1,0 +1,49 @@
+name: CD
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'k8s/**'
+jobs: 
+  build: 
+    name: Build
+    runs-on: ubuntu-latest
+    steps: 
+      - name: checkout 
+        uses: actions/checkout@v2
+
+      - name: build image and push to docker hub
+        uses: docker/build-push-action@v1.1.0
+        with: 
+          username: paulofponciano
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: paulofponciano/webgo
+          tags: ${{ github.sha }}, latest
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: kustomize
+        uses: imranismail/setup-kustomize@v1
+        with: 
+          kustomize_version: v3.6.1
+
+      - name: update k8s
+        run: |
+          cd k8s
+          kustomize edit set image webgo=paulofponciano/webgo:${{ github.sha }}
+          cat kustomization.yaml
+
+      - name: commit
+        run: | 
+          git config --local user.email "paulofponciano@gmail.com"
+          git config --local user.name "Paulo"
+          git commit -am "actions change image tag"
+
+      - name: push
+        uses: ad-m/github-push-action@master
