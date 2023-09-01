@@ -23,7 +23,7 @@ jobs:
         with: 
           context: .
           push: true
-          tags: paulofponciano/webgo:${{ github.sha }}
+          tags: paulofponciano/webgo:${{ github.sha }}, paulofponciano/webgo:latest
 
   deploy:
     name: Deploy
