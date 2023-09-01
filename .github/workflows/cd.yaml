@@ -23,6 +23,7 @@ jobs:
         with: 
           repository: paulofponciano/webgo
           tags: ${{ github.sha }}, latest
+          push: true
 
   deploy:
     name: Deploy
