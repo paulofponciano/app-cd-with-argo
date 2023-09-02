@@ -9,4 +9,4 @@ namespace: webgo
 images:
 - name: webgo
   newName: paulofponciano/webgo
-  newTag: 6471d5992befb30c843388c9c4faea34690fe709
+  newTag: 6f2e9ff60382f789bf5f2046675d3e0aa5ccf8af
