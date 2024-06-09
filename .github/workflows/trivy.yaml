@@ -25,7 +25,6 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: 'config'
-          input: './Dockerfile'
           hide-progress: true
           format: 'sarif'
           output: 'trivy-results-config.sarif'
