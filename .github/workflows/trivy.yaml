@@ -25,6 +25,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: 'config'
+          input: './Dockerfile'
           hide-progress: true
           format: 'sarif'
           output: 'trivy-results-config.sarif'
@@ -36,8 +37,10 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
+          category: 'vulnerability-scan'
 
       - name: Upload Trivy scan Config results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results-config.sarif'
+          category: 'config-scan'
